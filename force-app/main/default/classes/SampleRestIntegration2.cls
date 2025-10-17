@@ -1,27 +1,39 @@
-public with sharing class SampleRestIntegration2 {
+public with sharing class ApiPincodeSimple {
+    
     public static void getPlaces(String pincode) {
+        // Create HTTP request
         HttpRequest req = new HttpRequest();
         req.setEndpoint('https://api.postalpincode.in/pincode/' + pincode);
         req.setMethod('GET');
+        
         Http h = new Http();
         HttpResponse res = h.send(req);
-        // Log the raw response body to inspect its structure
-        System.debug('Response Body: ' + res.getBody());
-        // Deserialize based on the actual structure of the response
+        
+        // Deserialize JSON into a list of wrapper classes
         List<WrapperClass> wrapperList = (List<WrapperClass>) JSON.deserialize(res.getBody(), List<WrapperClass>.class);
-        for (WrapperClass wrapper : wrapperList) {
-            for (InnerWrapperClass wrp : wrapper.PostOffice) {
-                System.debug(wrp.BranchType);
+        
+        if (!wrapperList.isEmpty() && wrapperList[0].PostOffice != null) {
+            // Get all branch types
+            List<String> branchTypes = new List<String>();
+            
+            for (InnerWrapperClass postOffice : wrapperList[0].PostOffice) {
+                branchTypes.add(postOffice.BranchType);
             }
+            
+            System.debug('Branch Types: ' + branchTypes);
+        } else {
+            System.debug('No Post Offices found for this pincode.');
         }
     }
- 
+    
+    // Outer wrapper
     public class WrapperClass {
         public String Message;
         public String Status;
         public List<InnerWrapperClass> PostOffice;
     }
- 
+    
+    // Inner wrapper
     public class InnerWrapperClass {
         public String Name;
         public String BranchType;
