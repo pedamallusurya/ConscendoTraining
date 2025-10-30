@@ -1,0 +1,16 @@
+<div id="box" style="width:50px; height:50px; background:red; position:relative;"></div>
+<button onclick="moveBox()">Move</button>
+
+<script>
+function moveBox() {
+  const box = document.getElementById("box");
+  let pos = 0;
+  const interval = setInterval(() => {
+    if (pos >= 200) clearInterval(interval);
+    else {
+      pos++;
+      box.style.left = pos + "px";
+    }
+  }, 5);
+}
+</script>

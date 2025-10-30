@@ -1,3 +1,12 @@
 <template>
     <p> Fist Sample LWC Component</p>
+    <h1> Employee Details </h1>
+    <p> <b>Name : {empName}</b></p>
+    <p><b> Age : {empAge}</b> </p>
+    <b>Address :{Address}</b>
+    <lightning-button variant="brand" label="getAddress" title="titlename" onclick={getAddress}>
+    </lightning-button>
+<template if:true={isShow}>
+    This is Template two
+</template>
 </template>
