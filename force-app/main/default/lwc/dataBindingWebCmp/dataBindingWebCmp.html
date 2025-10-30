@@ -5,10 +5,16 @@
     <p> <b>Name : {empName}</b></p>
     <p><b> Age : {empAge}</b> </p>
     <b>Address :{Address}</b>
+    <b>employees:{Employees}</b>
+    <b>Dynamic Var : {dynamicVar}</b>
     </lightning-card>
     <lightning-button variant="brand" label="getAddress" title="titlename" onclick={getAddress}>
     </lightning-button>
+    <lightning-input type="text" label="Show Template" value={dynamicVar} onchange={getLiveData}></lightning-input>
 <template if:true={isShow}>
     This is Template two
+ <template for:each={Employees} for:item="emp" for:index="index" >
+        <p key={emp.index}>{emp}</p>
+</template>
 </template>
 </template>
