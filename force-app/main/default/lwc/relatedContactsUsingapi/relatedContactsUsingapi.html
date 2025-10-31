@@ -1,0 +1,8 @@
+<template>
+    <lightning-card title="Related Contacts" icon-name="standard:contact"></lightning-card>
+    <template if:true={relatedcontacts}>
+        <template for:each={relatedcontacts} for:item='contact'>
+             <p key={contact.Id}><b>{Account.Name}</b>- {con.Name}</p>
+            <p key={contact.Id}>{contact.Name}-{con.Phone}</p>
+</template>
+    </template>

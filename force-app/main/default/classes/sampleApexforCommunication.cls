@@ -17,4 +17,13 @@ public  class sampleApexforCommunication {
             throw new AuraHandledException(e.getMessage());
         }
     }
+     @AuraEnabled(cacheable=true)
+    public static list<contact> getcontactapi(string accid){
+       try {
+            List<Contact> conList = [SELECT Id,Accountid, Name,Account.Name, Phone FROM Contact where Accountid=:accid];
+            return conList;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+  }
 }
