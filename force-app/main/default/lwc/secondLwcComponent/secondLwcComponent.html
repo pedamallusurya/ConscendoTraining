@@ -1,0 +1,11 @@
+<template>
+    <lightning-button label="Click Me" variant="success" onclick={fetchAllSmbCustomers}>
+    </lightning-button>
+    <lightning-button label="New" variant="Destructive" onclick={newCustomers}>
+    </lightning-button>
+    <lightning-datatable
+      key-field="id"
+      data={accounts}
+      columns={columnsList}>
+    </lightning-datatable>
+</template>
