@@ -1,29 +1,66 @@
-import { LightningElement } from 'lwc';
-import getAccounts from '@salesforce/apex/sampleApexforCommunication.getAccounts';
+import { LightningElement, track } from 'lwc';
+import getAccounts from '@salesforce/apex/SampleApexforCommunication.getAccounts';
+import updateAccounts from '@salesforce/apex/SampleApexforCommunication.updateAccounts';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const columns = [
-    { label: 'Name', fieldName: 'Name' },
-    { label: 'Email', fieldName: 'Email' },
-    { label: 'Phone', fieldName: 'Phone' }
+    { label: 'Name', fieldName: 'Name', editable: true },
+    { label: 'Rating', fieldName: 'Rating', editable: true },
+    { label: 'Phone', fieldName: 'Phone', editable: true }
 ];
 
 export default class SecondLwcComponent extends LightningElement {
-    accounts;
+    @track accounts;
+    @track draftValues = [];
     columnsList = columns;
 
-    fetchAllSmbCustomers(event) {
+    // Fetch accounts
+    fetchAllSmbCustomers() {
         getAccounts()
             .then(result => {
                 this.accounts = result;
-                // eslint-disable-next-line no-console
-                console.log(result);
+                console.log('Accounts fetched:', result);
             })
             .catch(error => {
-                // eslint-disable-next-line no-console
-                console.error(error);
+                console.error('Error fetching accounts:', error);
             });
     }
-    newCustomers(event){
-          
+
+    // Save edited records
+    handleSave(event) {
+        const updatedFields = event.detail.draftValues;
+        console.log('Saving updates:', updatedFields);
+
+        updateAccounts({ updatedAccList: updatedFields })
+            .then(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Records updated successfully!',
+                        variant: 'success'
+                    })
+                );
+
+                // Clear draft values
+                this.draftValues = [];
+
+                // Refresh table
+                return this.fetchAllSmbCustomers();
+            })
+            .catch(error => {
+                console.error('Error updating:', error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error updating records',
+                        message: error.body.message,
+                        variant: 'error'
+                    })
+                );
+            });
+    }
+
+    newCustomers() {
+        // You can navigate to new record creation here
+        console.log('New Customer button clicked');
     }
 }

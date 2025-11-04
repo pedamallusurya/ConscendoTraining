@@ -2,7 +2,7 @@ public  class sampleApexforCommunication {
     @AuraEnabled(cacheable=true)
     public static List<Account> getAccounts(){
         try {
-            List<Account> accList = [SELECT Id, Name,Email, Phone FROM Account LIMIT 5];
+            List<Account> accList = [SELECT Id, Name,Rating, Phone FROM Account];
             return accList;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
@@ -26,4 +26,13 @@ public  class sampleApexforCommunication {
             throw new AuraHandledException(e.getMessage());
         }
   }
+  @AuraEnabled
+public static void updateAccounts(List<Account> updatedAccList) {
+    try {
+        update updatedAccList;
+    } catch (Exception e) {
+        throw new AuraHandledException(e.getMessage());
+    }
+}
+
 }
