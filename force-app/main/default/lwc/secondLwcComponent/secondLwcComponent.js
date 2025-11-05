@@ -25,6 +25,14 @@ export default class SecondLwcComponent extends LightningElement {
                 console.error('Error fetching accounts:', error);
             });
     }
+     handleRowAction(event) {
+        const actionName = event.detail.action.name;
+        const recordId = event.detail.row.Id;
+
+        if (actionName === 'view_record') {
+            this.navigateToRecord(recordId);
+        }
+    }
 
     // Save edited records
     handleSave(event) {
