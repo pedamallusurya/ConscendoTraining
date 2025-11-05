@@ -1,19 +1,28 @@
 <template>
-    <lightning-button label="Click Me" variant="success" onclick={fetchAllSmbCustomers}></lightning-button>
-    <lightning-button label="New" variant="destructive" onclick={newCustomers}></lightning-button>
-
-    <lightning-datatable
-        key-field="Id"
-        data={accounts}
-        columns={columnsList}
-        draft-values={draftValues}
-        onsave={handleSave}
-        hide-checkbox-column>
-    </lightning-datatable>
-    <lightning-datatable
-        key-field="Id"
-        data={accounts}
-        columns={columnsList}
-        onrowaction={handleRowAction}>
-    </lightning-datatable>
+    <lightning-card title="Accounts List" icon-name="standard:account">
+        <div class="slds-p-around_medium">
+            <!-- Refresh / New buttons -->
+            <lightning-button
+                label="Fetch Accounts"
+                variant="brand"
+                class="slds-m-right_small"
+                onclick={fetchAllSmbCustomers}>
+            </lightning-button>
+            <lightning-button
+                label="New Customer"
+                variant="neutral"
+                onclick={newCustomers}>
+            </lightning-button>
+            <br/><br/>
+            <!-- Datatable -->
+            <lightning-datatable
+                key-field="Id"
+                data={accounts}
+                columns={columnsList}
+                draft-values={draftValues}
+                onsave={handleSave}
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
 </template>

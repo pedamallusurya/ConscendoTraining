@@ -7,10 +7,19 @@ import { NavigationMixin } from 'lightning/navigation';
 const columns = [
     { label: 'Name', fieldName: 'Name', editable: true },
     { label: 'Rating', fieldName: 'Rating', editable: true },
-    { label: 'Phone', fieldName: 'Phone', editable: true }
+    { label: 'Phone', fieldName: 'Phone', editable: true },
+    {
+        type: 'action',
+        typeAttributes: {
+            rowActions: [
+                { label: 'View Record', name: 'view_record' }
+            ]
+        }
+    }
 ];
 
-export default class SecondLwcComponent extends LightningElement {
+
+export default class SecondLwcComponent extends NavigationMixin(LightningElement){
     @track accounts;
     @track draftValues = [];
     columnsList = columns;
