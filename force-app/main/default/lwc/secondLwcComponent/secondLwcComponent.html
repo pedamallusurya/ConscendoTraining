@@ -10,4 +10,10 @@
         onsave={handleSave}
         hide-checkbox-column>
     </lightning-datatable>
+    <lightning-datatable
+        key-field="Id"
+        data={accounts}
+        columns={columnsList}
+        onrowaction={handleRowAction}>
+    </lightning-datatable>
 </template>

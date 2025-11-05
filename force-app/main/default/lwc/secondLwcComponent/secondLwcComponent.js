@@ -2,6 +2,7 @@ import { LightningElement, track } from 'lwc';
 import getAccounts from '@salesforce/apex/SampleApexforCommunication.getAccounts';
 import updateAccounts from '@salesforce/apex/SampleApexforCommunication.updateAccounts';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { NavigationMixin } from 'lightning/navigation';
 
 const columns = [
     { label: 'Name', fieldName: 'Name', editable: true },
@@ -25,13 +26,25 @@ export default class SecondLwcComponent extends LightningElement {
                 console.error('Error fetching accounts:', error);
             });
     }
-     handleRowAction(event) {
+    handleRowAction(event) {
         const actionName = event.detail.action.name;
         const recordId = event.detail.row.Id;
+
+        console.log('Row action triggered:', actionName, recordId);
 
         if (actionName === 'view_record') {
             this.navigateToRecord(recordId);
         }
+    }
+     navigateToRecord(recordId) {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: recordId,
+                objectApiName: 'Account',
+                actionName: 'view'
+            }
+        });
     }
 
     // Save edited records
