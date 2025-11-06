@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="🌤️ Current Weather in Bengaluru">
+        <template if:true={weather}>
+            <p>🌡️ Temperature: {weather.temperature} °C</p>
+            <p>💨 Wind Speed: {weather.windspeed} km/h</p>
+            <p>🕒 Time: {weather.time}</p>
+        </template>
+        <template if:false={weather}>
+            <p>Loading weather data...</p>
+        </template>
+    </lightning-card>
+</template>

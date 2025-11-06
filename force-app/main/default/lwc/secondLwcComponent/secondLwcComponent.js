@@ -17,7 +17,6 @@ const columns = [
         }
     }
 ];
-
 export default class SecondLwcComponent extends NavigationMixin(LightningElement){
     @track accounts;
     @track draftValues = [];
