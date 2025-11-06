@@ -12,12 +12,11 @@ const columns = [
         type: 'action',
         typeAttributes: {
             rowActions: [
-                { label: 'View Record', name: 'view_record' }
+                { label: 'View Record', name: 'view_record' },
             ]
         }
     }
 ];
-
 
 export default class SecondLwcComponent extends NavigationMixin(LightningElement){
     @track accounts;
@@ -55,7 +54,6 @@ export default class SecondLwcComponent extends NavigationMixin(LightningElement
             }
         });
     }
-
     // Save edited records
     handleSave(event) {
         const updatedFields = event.detail.draftValues;
