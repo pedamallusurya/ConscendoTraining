@@ -3,7 +3,6 @@ import { LightningElement, track } from 'lwc';
 export default class CurrentWeatherLwc extends LightningElement {
     @track weather;
     @track error;
-
     connectedCallback() {
         // 1️⃣ Get current location using browser API
         if (navigator.geolocation) {
