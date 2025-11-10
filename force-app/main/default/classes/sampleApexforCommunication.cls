@@ -1,0 +1,38 @@
+public  class sampleApexforCommunication {
+    @AuraEnabled(cacheable=true)
+    public static List<Account> getAccounts(){
+        try {
+            List<Account> accList = [SELECT Id, Name,Rating, Phone FROM Account limit 5];
+            return accList;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+     @AuraEnabled(cacheable=true)
+    public static list<contact> getContacts(){
+        try {
+            List<Contact> conList = [SELECT Id, Name, Phone FROM Contact LIMIT 5];
+            return conList;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+     @AuraEnabled(cacheable=true)
+    public static list<contact> getcontactapi(string accid){
+       try {
+            List<Contact> conList = [SELECT Id,Accountid, Name,Account.Name, Phone FROM Contact where Accountid=:accid];
+            return conList;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+  }
+  @AuraEnabled
+public static void updateAccounts(List<Account> updatedAccList) {
+    try {
+        update updatedAccList;
+    } catch (Exception e) {
+        throw new AuraHandledException(e.getMessage());
+    }
+}
+
+}

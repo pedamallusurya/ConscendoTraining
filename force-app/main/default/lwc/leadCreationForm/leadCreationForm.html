@@ -1,0 +1,56 @@
+<template>
+    <div class="login-container">
+        <div class="login-card">
+            <h1 class="form-title">Lead Signup Form</h1>
+            <lightning-input
+                name="firstName"
+                label="First Name"
+                value={firstName}
+                onchange={handleChange}>
+            </lightning-input>
+            <lightning-input
+                name="lastName"
+                label="Last Name"
+                value={lastName}
+                onchange={handleChange}
+                required>
+            </lightning-input>
+
+            <lightning-input
+                type="email"
+                name="email"
+                label="Email"
+                value={email}
+                onchange={handleChange}
+                required>
+            </lightning-input>
+
+            <lightning-input
+                name="company"
+                label="Company"
+                value={company}
+                onchange={handleChange}
+                required>
+            </lightning-input>
+
+            <lightning-input
+                type="tel"
+                name="phone"
+                label="Phone"
+                value={phone}
+                onchange={handleChange}>
+            </lightning-input>
+
+            <lightning-button
+                variant="brand"
+                label="Create Lead"
+                class="submit-btn"
+                onclick={handleSubmit}>
+            </lightning-button>
+        </div>
+    </div>
+</template>
+
+
+
+

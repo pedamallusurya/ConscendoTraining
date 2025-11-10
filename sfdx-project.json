@@ -5,8 +5,15 @@
       "default": true
     }
   ],
+<<<<<<< HEAD
   "name": "ConscendoTraining",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "64.0"
+=======
+  "name": "ConscendoLWCTraining",
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "65.0"
+>>>>>>> fb1ee341c26d665ceac688bb11a96e38603ded27
 }

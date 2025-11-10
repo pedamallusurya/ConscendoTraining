@@ -1,0 +1,13 @@
+<template>
+    <template if:true={contacts.data}>
+    <template for:each={contacts.data} for:item="conx">
+         <p key={conx.id}>{conx.Name}-{conx.Id}</p>
+    </template>
+ </template>
+ <P> <b>Account List</b> </P>
+  <template if:true={listofaccounts}>
+    <template for:each={listofaccounts} for:item="Acc">
+         <p key={Acc.id}>{Acc.Name}-{Acc.Id}</p>
+    </template>
+ </template>
+</template>
