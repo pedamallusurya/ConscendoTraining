@@ -1,0 +1,63 @@
+<template>
+    <div class="slds-p-around_medium">
+        <lightning-card title="Task 1" icon-name="standard:account">
+            <div class="slds-p-horizontal_medium slds-p-vertical_small">
+                <!-- 2 fields per row using SLDS grid -->
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="text"
+                            label="First Name"
+                            name="FirstName"
+                            data-id="firstName"
+                            onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="text"
+                            label="Last Name"
+                            name="LastName"
+                            data-id="lastName"
+                            onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-gutters slds-m-top_small">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="email"
+                            label="Email"
+                            name="Email"
+                            data-id="email"
+                            onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="tel"
+                            label="Phone"
+                            name="Phone"
+                            data-id="phone"
+                            onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+
+                <div class="slds-m-top_medium slds-align_absolute-center">
+                    <div
+                        class="hover-button"
+                        onmouseover={handleHover}
+                        onmouseout={handleMouseOut} >
+                        <button 
+                            class="slds-button slds-button_brand submit-button"
+                            title="Submit"
+                            onclick={handleSubmit}>
+                      </button>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </div>
+</template>

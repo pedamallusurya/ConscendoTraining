@@ -1,0 +1,12 @@
+.submit-button lightning-button {
+    transition: all 0.3s ease;
+}
+
+/* Hover effect to turn button green */
+.submit-button:hover {
+    --slds-c-button-brand-color-background: green;
+    --slds-c-button-brand-color-border: green;
+    --slds-c-button-brand-color-background-hover: #28a745; /* lighter green */
+    --slds-c-button-brand-color-border-hover: #28a745;
+    transform: scale(1.05);
+}
