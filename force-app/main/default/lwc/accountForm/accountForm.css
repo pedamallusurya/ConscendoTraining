@@ -1,0 +1,15 @@
+.custom-button {
+    background-color: skyblue;
+    color: white;
+    font-weight: 600;
+    padding: 0.60rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+ 
+/* Hover effect */
+.custom-button:hover {
+    background-color: green; /* Appealing Salesforce blue */
+}

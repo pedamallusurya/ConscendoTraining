@@ -23,20 +23,29 @@ public with sharing class accountCreationValidateForm {
             throw new AuraHandledException('Error fetching Account: ' + e.getMessage());
         }
     }*/
+   
+    // Method to insert a new Account
     @AuraEnabled
-	public static void doCreateAccount(String acntName,String acntNum,String acntDesc,String acntStreet ,String acntCity,String acntState,String acntCountry,String acntPostalCode){
-		System.debug('acntName :'+acntName+ ' acntNum: '+acntNum);
-		Account acnt = new Account();
-		acnt.Name = acntName;
-		acnt.AccountNumber=acntNum;
-        acnt.Description=acntDesc;
-		acnt.BillingStreet=acntStreet;
-		acnt.BillingCity=acntCity;
-        acnt.BillingState=acntState;
-		acnt.BillingCountry=acntCountry;
-        acnt.BillingPostalCode=acntPostalCode;
-		insert acnt;
-		system.debug('ID: '+acnt.id);
-		
-	}
+    public static String insertAccount(Account acc) {
+        try {
+            insert acc;
+            return 'Account created successfully with Id: ' + acc.Id;
+        } catch (Exception e) {
+            return 'Error while inserting Account: ' + e.getMessage();
+        }
+    }
+
+    // Method to update an existing Account
+    @AuraEnabled
+    public static String updateAccount(Account acc) {
+        try {
+            update acc;
+            return 'Account updated successfully';
+        } catch (Exception e) {
+            return 'Error while updating Account: ' + e.getMessage();
+        }
+    }
 }
+
+	
+

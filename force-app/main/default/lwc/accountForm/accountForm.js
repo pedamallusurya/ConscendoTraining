@@ -1,105 +1,85 @@
-import { LightningElement } from 'lwc';
-import doCreateAccount from '@salesforce/apex/accountCreationValidateForm.doCreateAccount';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import BillingAddress from '@salesforce/schema/Account.BillingAddress';
+import { LightningElement, track } from 'lwc';
+import insertAccount from '@salesforce/apex/accountCreationValidateForm.insertAccount';
+import updateAccount from '@salesforce/apex/accountCreationValidateForm.updateAccount';
 
 export default class AccountForm extends LightningElement {
-    accountName = '';
-    accountNumber = '';
-    billingAddress = '';
-    // Discrete billing fields to capture City/State/Country/PostalCode
-    billingCity = '';
-    billingState = '';
-    billingCountry = '';
-    billingPostalCode = '';
-    description = '';
+    @track recordId;
+    @track name = '';
+    @track accountNumber = '';
+    @track billingAddress = '';
+    @track description = '';
+    @track message = '';
 
-    handleNameChange(event) {
-        this.accountName = event.target.value;
+    // Handle input changes
+    handleChange(event) {
+        const { name, value } = event.target;
+        if (name === 'Name') this.name = value;
+        if (name === 'AccountNumber') this.accountNumber = value;
+        if (name === 'BillingAddress') this.billingAddress = value;
+        if (name === 'Description') this.description = value;
     }
-    handleNumberChange(event) {
-        this.accountNumber = event.target.value;
-    }
-    handleBillingChange(event){
-        this.billingAddress = event.target.value;
-    }
-    handleBillingCityChange(event){
-        this.billingCity = event.target.value;
-    }
-    handleBillingStateChange(event){
-        this.billingState = event.target.value;
-    }
-    handleBillingCountryChange(event){
-        this.billingCountry = event.target.value;
-    }
-    handleBillingPostalCodeChange(event){
-        this.billingPostalCode = event.target.value;
-    }
-    handleDesChange(event){
-        this.description = event.target.value;
-    }
-    handleSubmit() {
-        // 🔹 Validation 1: Account Name (min 4, max 15)
-        if (!this.accountName || this.accountName.length < 4 || this.accountName.length > 15) {
-            this.showToast('Error', 'Account Name must be between 4 and 15 characters.', 'error');
-            return;
+
+    // Validation for Name and Account Number
+    validateInputs() {
+        if (this.name.length < 4 || this.name.length > 15) {
+            this.message = 'Account Name must be between 4 and 15 characters.';
+            return false;
         }
-        // 🔹 Validation 2: Account Number (max 5 digits)
+
         if (this.accountNumber && this.accountNumber.length > 5) {
-            this.showToast('Error', 'Account Number cannot exceed 5 digits.', 'error');
-            return;
+            this.message = 'Account Number cannot exceed 5 digits.';
+            return false;
         }
-        // Build a single params object matching Apex signature exactly
-        const params = {
-            acntName: this.accountName,
-            acntNum: this.accountNumber,
-            acntDesc: this.description,
-            // Use free-text billingAddress as street if present; also support discrete fields if you add them in HTML
-            acntStreet: this.billingAddress || '',
-            acntCity: this.billingCity || '',
-            acntState: this.billingState || '',
-            acntCountry: this.billingCountry || '',
-            acntPostalCode: this.billingPostalCode || ''
+
+        return true;
+    }
+
+    // Insert Account
+    async handleSubmit() {
+        if (!this.validateInputs()) return;
+
+        const acc = {
+            Id: this.recordId,
+            Name: this.name,
+            AccountNumber: this.accountNumber,
+            BillingStreet: this.billingAddress,
+            Description: this.description
         };
 
-        doCreateAccount(params)
-            .then((result) => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Account created successfully!',
-                        variant: 'success'
-                    })
-                );
-                this.resetForm();
-            })
-            .catch((error) => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: error?.body?.message || 'Error while creating Account',
-                        variant: 'error'
-                    })
-                );
-            });
+        try {
+            const result = await insertAccount({ acc });
+            this.message = result;
+           // this.clearFields();
+        } catch (error) {
+            this.message = 'Error: ' + error.body.message;
+        }
     }
-    resetForm() {
-        this.accountName = '';
+
+    // Update Account
+    async handleUpdate() {
+        if (!this.validateInputs()) return;
+
+        const acc = {
+            Id: this.recordId,
+            Name: this.name,
+            AccountNumber: this.accountNumber,
+            BillingStreet: this.billingAddress,
+            Description: this.description
+        };
+
+        try {
+            const result = await updateAccount({ acc });
+            this.message = result;
+        } catch (error) {
+            this.message = 'Error: ' + error.body.message;
+        }
+    }
+
+    clearFields() {
+        this.recordId = '';
+        this.name = '';
         this.accountNumber = '';
         this.billingAddress = '';
-        this.billingCity = '';
-        this.billingState = '';
-        this.billingCountry = '';
-        this.billingPostalCode = '';
         this.description = '';
-    }
-    showToast(title, message, variant) {
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title,
-                message,
-                variant
-            })
-        );
     }
 }

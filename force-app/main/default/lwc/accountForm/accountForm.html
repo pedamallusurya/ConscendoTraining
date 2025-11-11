@@ -1,13 +1,24 @@
 <template>
     <lightning-card title="Account Form" icon-name="standard:account">
+
         <div class="slds-p-around_medium">
-            <lightning-input  label="Account Name" name="Name" value={accountName} onchange={handleNameChange}  required></lightning-input>
-            <lightning-input label="Account Number" name="AccountNumber" value={accountNumber} type="number" onchange={handleNumberChange}></lightning-input>
-            <lightning-input-address label="Billing Address" name="BillingAddress" value={billingAddress} onchange={handleBillingChange}></lightning-input-address>
-            <lightning-textarea label="Description" name="Description" value={description} onchange={handleDesChange}></lightning-textarea>
-            <div class="slds-m-top_medium slds-align_absolute-center">
-                <lightning-button variant="brand" label="Submit" onclick={handleSubmit}></lightning-button>
+            <lightning-input label="Account Name"  name="Name" value={name} onchange={handleChange} required> </lightning-input>
+            <lightning-input label="Account Number" name="AccountNumber" value={accountNumber} type="number" onchange={handleChange}> </lightning-input>
+            <lightning-textarea label="Billing Address" name="BillingAddress" value={billingAddress} onchange={handleChange}> </lightning-textarea>
+            <lightning-textarea label="Description" name="Description" value={description} onchange={handleChange}>  </lightning-textarea>
+        <div class="slds-col slds-size_1-of-1 slds-text-align_center slds-p-top_medium">
+                <button class="custom-button" onclick={handleSubmit}>Create</button>
             </div>
+               <div class="slds-col slds-size_1-of-1 slds-text-align_center slds-p-top_medium">
+                <button class="custom-button" onclick={handleUpdate}>Update</button>
+            </div>
+
+            <!-- Message Display -->
+            <template if:true={message}>
+                <p class="slds-m-top_medium slds-text-color_success">{message}</p>
+            </template>
+
         </div>
+
     </lightning-card>
 </template>
